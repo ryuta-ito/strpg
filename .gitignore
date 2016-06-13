@@ -1,0 +1,6 @@
+doc
+task
+vendor
+Gemfile
+Gemfile.lock
+.bundle
