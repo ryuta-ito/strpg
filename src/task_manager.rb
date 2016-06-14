@@ -1,6 +1,6 @@
 require_relative './task.rb'
 
-module TaskCheck
+module TaskExtract
   class TaskManager #Taskのfactory
     attr_reader :tasks
 
