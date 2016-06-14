@@ -8,8 +8,8 @@ module TaskExtract
       @tasks = []
     end
 
-    def add_task task_str, result_str=nil, reason=nil
-      @tasks << (Task.new task_str, result_str, reason)
+    def add_task task_str, result_str=nil, reason=nil, file_striction=nil
+      @tasks << (Task.new task_str, result_str, reason, file_striction)
     end
 
     def task_extract file_path
@@ -42,7 +42,19 @@ module TaskExtract
       end
     end
 
-    def task_extract_with_file_striction
+    def task_extract_with_file_striction file_path
+      lines = []
+      result_lines = []
+      File.foreach(file_path) { |line| lines << line }
+
+      lines.each.with_index do |line, i|
+        if task? line
+          reason = ((reason? lines[i+1]) ? lines[i+1] : nil)
+          file_striction = ((file_striction? lines[i+2]) ? lines[i+2] : nil)
+          result = ((result? lines[i+3]) ? lines[i+3] : nil)
+          add_task line, result, reason, file_striction
+        end
+      end
     end
 
     def task_massages
@@ -68,6 +80,11 @@ module TaskExtract
     def reason? reason_str
       reason_str = "" if reason_str.class != String
       (reason_str.match /^  <- .+/) ? true : false
+    end
+
+    def file_striction? file_striction_str
+      file_striction_str = "" if file_striction_str.class != String
+      (file_striction_str.match /^  * .+/) ? true : false
     end
   end
 end

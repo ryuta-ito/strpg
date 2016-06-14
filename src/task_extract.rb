@@ -13,6 +13,9 @@ module TaskExtract
     task_manager.task_massages
   end
 
-  def task_extract_with_file_striction
+  def task_extract_with_file_striction file_path
+    task_manager = Factory.task_manager
+    task_manager.task_extract_with_file_striction file_path
+    task_manager.tasks
   end
 end

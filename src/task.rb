@@ -1,9 +1,10 @@
 module TaskExtract
   class Task
-    def initialize task_str, result_str, reason_str
+    def initialize task_str, result_str=nil, reason_str=nil, file_striction_str=nil
       @task_str = task_str
       @result_str = result_str
       @reason_str = reason_str
+      @file_striction_str = file_striction_str
     end
 
     def message
@@ -40,6 +41,10 @@ module TaskExtract
 
     def reason
       @reason_str.chomp.chars.drop(5).join
+    end
+
+    def file_strictions
+      @file_striction_str.chomp.chars.drop(4).join.split(',')
     end
 
     def finished?
