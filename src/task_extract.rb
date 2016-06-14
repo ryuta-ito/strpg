@@ -12,4 +12,7 @@ module TaskExtract
     task_manager.task_extract_with_reason file_path
     task_manager.task_massages
   end
+
+  def task_extract_with_file_striction
+  end
 end

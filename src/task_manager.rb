@@ -42,6 +42,9 @@ module TaskExtract
       end
     end
 
+    def task_extract_with_file_striction
+    end
+
     def task_massages
       @tasks.map{|task| task.message}.join("\n") + "\n"
     end
