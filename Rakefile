@@ -1,6 +1,7 @@
 require 'rake/testtask'
-require_relative 'src/task_check.rb'
+Dir.glob("./src/**/*.rb"){|file| require_relative file}
 include TaskCheck
+include EditControl
 
 desc 'run all test'
 task :default => [:test]
@@ -16,19 +17,26 @@ task :cc_task do
 end
 
 task :run do
-  # puts task_check './task/test_task'
-  # puts task_check './task/continus-checker'
   puts task_check './task/test_task_5'
 end
 
 task :view do
-  task_view_with_reason './task/continus-checker'
+  task_view_with_reason './task/test/edit_control'
+end
+
+task :test_edit_control do
+  
 end
 
 task :view_test do
   task_view './task/test/reason/task1'
 end
 
-task :bundle_install do
-  sh 'bundle install --path vendor/bundle'
+task :editable do
+  do_writable_all
 end
+
+task :uneditable do
+  do_unwritable_all
+end
+
