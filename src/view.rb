@@ -1,4 +1,5 @@
 require 'color_echo'
+require_relative './factory.rb'
 
 module View
   def task_messages_colored tasks
@@ -10,5 +11,15 @@ module View
     end
   end
 
-  module_function :task_messages_colored
+  def task_view file_path
+    task_manager = Factory.task_manager
+    task_manager.task_extract file_path
+    task_messages_colored task_manager.tasks
+  end
+
+  def task_view_with_reason file_path
+    task_manager = Factory.task_manager
+    task_manager.task_extract_with_reason file_path
+    task_messages_colored task_manager.tasks
+  end
 end
