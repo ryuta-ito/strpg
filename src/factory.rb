@@ -1,7 +1,7 @@
 require_relative './task_manager.rb'
 
 module Factory
-  include TaskCheck
+  include TaskExtract
 
   def task_manager
     TaskManager.new

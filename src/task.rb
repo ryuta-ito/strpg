@@ -1,4 +1,4 @@
-module TaskCheck
+module TaskExtract
   class Task
     def initialize task_str, result_str, reason_str
       @task_str = task_str

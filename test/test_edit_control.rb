@@ -10,14 +10,14 @@ class TestEditControl < Test::Unit::TestCase
   end
 
   def test_unwritable_files
-    do_unwritable_files ['./test/_test_task_extract.rb']
-    bool = File.writable? './test/_test_task_extract.rb'
+    do_unwritable_files ['./test/test_task_extract.rb']
+    bool = File.writable? './test/test_task_extract.rb'
     assert_equal false, bool
   end
 
   def test_writable_files
-    do_writable_files ['./test/_test_task_extract.rb']
-    bool = File.writable? './test/_test_task_extract.rb'
+    do_writable_files ['./test/test_task_extract.rb']
+    bool = File.writable? './test/test_task_extract.rb'
     assert_equal true, bool
   end
 

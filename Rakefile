@@ -1,6 +1,6 @@
 require 'rake/testtask'
 Dir.glob("./src/**/*.rb"){|file| require_relative file}
-include TaskCheck
+include TaskExtract
 include EditControl
 
 desc 'run all test'
