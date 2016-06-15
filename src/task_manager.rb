@@ -1,4 +1,5 @@
 require_relative './task.rb'
+require_relative './line.rb'
 
 module TaskExtract
   class TaskManager #Taskのfactory
@@ -8,51 +9,37 @@ module TaskExtract
       @tasks = []
     end
 
-    def add_task task_str, result_str=nil, reason=nil, file_striction=nil
-      @tasks << (Task.new task_str, result_str, reason, file_striction)
+    def add_task(task_str: , result_str: nil, reason_str: nil, file_striction_str: nil)
+      @tasks << (Task.new task_str: task_str, result_str: result_str, reason_str: reason_str, file_striction_str: file_striction_str)
     end
 
     def task_extract file_path
       lines = []
       result_lines = []
-      File.foreach(file_path) { |line| lines << line }
-
-      lines.each_cons(2) do |line_1, line_2|
-        if (tasks? [line_1, line_2])
-          add_task line_1
-        elsif (task? line_1) and !(task? line_2)
-          add_task line_1, line_2
-        end
-      end
-
-      add_task lines.last if (task? lines.last)
-    end
-
-    def task_extract_with_reason file_path
-      lines = []
-      result_lines = []
-      File.foreach(file_path) { |line| lines << line }
+      File.foreach(file_path) { |line| lines << Line.new(line) }
 
       lines.each.with_index do |line, i|
-        if task? line
-          reason = ((reason? lines[i+1]) ? lines[i+1] : nil)
-          result = ((result? lines[i+2]) ? lines[i+2] : nil)
-          add_task line, result, reason
-        end
-      end
-    end
+        if line.task?
+          task = {task_str: line.str}
+          invalid = false
 
-    def task_extract_with_file_striction file_path
-      lines = []
-      result_lines = []
-      File.foreach(file_path) { |line| lines << line }
+          [lines[i+1], lines[i+2], lines[i+3]].each do |in_line|
+            unless in_line.nil?
+              case
+              when in_line.task?
+                invalid = true
+              when in_line.reason?
+                unless invalid then task[:reason_str] = in_line.str end
+              when in_line.file_striction?
+                unless invalid then task[:file_striction_str] = in_line.str end
+              when in_line.result?
+                unless invalid then task[:result_str] = in_line.str end
+              else
+              end
+            end
+          end
 
-      lines.each.with_index do |line, i|
-        if task? line
-          reason = ((reason? lines[i+1]) ? lines[i+1] : nil)
-          file_striction = ((file_striction? lines[i+2]) ? lines[i+2] : nil)
-          result = ((result? lines[i+3]) ? lines[i+3] : nil)
-          add_task line, result, reason, file_striction
+          add_task task
         end
       end
     end

@@ -1,6 +1,6 @@
 module TaskExtract
   class Task
-    def initialize task_str, result_str=nil, reason_str=nil, file_striction_str=nil
+    def initialize(task_str: nil, result_str: nil, reason_str: nil, file_striction_str: nil)
       @task_str = task_str
       @result_str = result_str
       @reason_str = reason_str
@@ -16,11 +16,11 @@ module TaskExtract
     end
 
     def finished
-      "( #{task} ) is finished ( #{result} )"
+      "( #{task} ) -> ( #{result} )"
     end
 
     def exist_reason
-      "the reason is ( #{reason} )"
+      "<- ( #{reason} )"
     end
 
     def reason_is_nothing
@@ -36,7 +36,7 @@ module TaskExtract
     end
 
     def result
-      @result_str.chomp.chars.drop(2).join
+      @result_str.chomp.chars.drop(5).join
     end
 
     def reason

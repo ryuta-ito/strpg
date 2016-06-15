@@ -41,9 +41,5 @@ class TestEditControl < Test::Unit::TestCase
     assert_equal false, bool
     do_writable_all
   end
-
-  # def test_edit_control
-  #   edit_control './task/test/edit_control'
-  # end
 end
 

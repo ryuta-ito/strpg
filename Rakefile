@@ -1,42 +1,40 @@
 require 'rake/testtask'
+require './src/dirs.rb'
 Dir.glob("./src/**/*.rb"){|file| require_relative file}
 include TaskExtract
 include EditControl
+include View
 
-desc 'run all test'
 task :default => [:test]
 
+desc 'run all test'
 Rake::TestTask.new do |test|
   test.libs << 'test'
   test.test_files = Dir[ 'test/**/test_*.rb' ]
   test.verbose = true
 end
 
-task :cc_task do 
-  puts task_check './task/continus-checker'
+task :task do
+  task_view Dirs::ALL_TASK_DIRS
 end
 
-task :run do
-  puts task_check './task/test_task_5'
+namespace :task do
+  task :test do
+    task_view Dirs::TEST_TASK_DIRS
+  end
+
+  task :src do
+    task_view Dirs::SRC_TASK_DIRS
+  end
 end
 
-task :view do
-  task_view_with_reason './task/test/edit_control'
-end
+namespace :run do
+  task :test do
+    do_unwritable_all
+    do_writable_files Dirs::ALL_TASK_DIRS
+  end
 
-task :test_edit_control do
-  
+  task :editable do
+    do_writable_all
+  end
 end
-
-task :view_test do
-  task_view './task/test/reason/task1'
-end
-
-task :editable do
-  do_writable_all
-end
-
-task :uneditable do
-  do_unwritable_all
-end
-
