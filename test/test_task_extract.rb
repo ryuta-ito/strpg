@@ -17,5 +17,15 @@ class TestTaskExtract < Test::Unit::TestCase
     expected_str = "( task1 ) -> ( something text )\nthe reason is nothing\n( task2 ) -> ( something text )\nthe reason is nothing\n"
     assert_equal expected_str, (task_extract './task/sample/test_task_4').task_massages
   end
+
+  def test_task_extract_with_file_striction
+    task = (task_extract './task/sample/test_task_with_file_striction').tasks.first
+    assert_equal [task.task, task.reason, task.file_strictions.first, task.result], ['task', 'reason', 'path/file', 'result']
+  end
+
+  def test_task_extract_with_file_striction_not_finished
+    assert_equal ['./src/task.rb', './src/view.rb'], (file_striction_extract './task/sample/file_striction/test_task_file_striction_extract')
+    assert_equal [], (file_striction_extract './task/sample/file_striction/test_task_file_striction_extract_1')
+  end
 end
 

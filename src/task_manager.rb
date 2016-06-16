@@ -44,6 +44,28 @@ module TaskExtract
       end
     end
 
+    def self.file_striction_extracts file_paths
+      _file_paths = []
+      file_paths.each do |file_path|
+        _file_paths += self.file_striction_extract file_path
+      end
+      _file_paths
+    end
+
+    def self.file_striction_extract file_path
+      task_manager = self.new
+      task_manager.task_extract file_path
+      file_paths = []
+      task_manager.tasks.each do |task|
+        unless task.finished?
+          task.file_strictions.each do |file_path|
+            file_paths << file_path
+          end
+        end
+      end
+      file_paths
+    end
+
     def task_massages
       @tasks.map{|task| task.message}.join("\n") + "\n"
     end

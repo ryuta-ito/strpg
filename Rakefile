@@ -28,13 +28,15 @@ namespace :task do
   end
 end
 
-namespace :run do
+task :strict do
+  do_writable_only_strict_file
+end
+
+namespace :strict do
   task :test do
-    do_unwritable_all
-    do_writable_files Dirs::ALL_TASK_DIRS
   end
 
-  task :editable do
+  task :reset do
     do_writable_all
   end
 end

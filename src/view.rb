@@ -12,7 +12,6 @@ module View
   end
 
   def task_view file_paths
-
     file_paths.each do |file_path|
       puts
       puts file_path

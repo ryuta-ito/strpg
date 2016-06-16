@@ -44,7 +44,7 @@ module TaskExtract
     end
 
     def file_strictions
-      @file_striction_str.chomp.chars.drop(4).join.split(',')
+      @file_striction_str ? @file_striction_str.chomp.chars.drop(4).join.split(',') : []
     end
 
     def finished?

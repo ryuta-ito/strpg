@@ -1,6 +1,7 @@
 module TaskExtract
   class Line
     attr_reader :str
+
     def initialize line_str
       @str = line_str
     end
