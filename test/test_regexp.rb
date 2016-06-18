@@ -1,4 +1,4 @@
-require_relative '../src/line.rb'
+require_relative '../lib/line.rb'
 require 'test/unit'
 
 class TestLine < Test::Unit::TestCase
