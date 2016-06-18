@@ -69,31 +69,5 @@ module TaskExtract
     def task_massages
       @tasks.map{|task| task.message}.join("\n") + "\n"
     end
-
-    def tasks? strs
-      strs.each do |str|
-        return false unless (task? str)
-      end
-      true
-    end
-
-    def task? task_str
-      task_str.chars.first == '-' ? true : false
-    end
-
-    def result? result_str
-      result_str = "" if result_str.class != String
-      (result_str.match /^  .+/) ? true : false
-    end
-
-    def reason? reason_str
-      reason_str = "" if reason_str.class != String
-      (reason_str.match /^  <- .+/) ? true : false
-    end
-
-    def file_striction? file_striction_str
-      file_striction_str = "" if file_striction_str.class != String
-      (file_striction_str.match /^  * .+/) ? true : false
-    end
   end
 end
