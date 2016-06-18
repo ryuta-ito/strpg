@@ -9,11 +9,16 @@ module TaskExtract
       @tasks = []
     end
 
+    def set_tasks tasks
+      @tasks = tasks
+    end
+
     def add_task(task_str: , result_str: nil, reason_str: nil, file_striction_str: nil)
       @tasks << (Task.new task_str: task_str, result_str: result_str, reason_str: reason_str, file_striction_str: file_striction_str)
     end
 
-    def task_extract file_path
+    def self.task_extract file_path
+      task_manager = self.new
       lines = []
       result_lines = []
       File.foreach(file_path) { |line| lines << Line.new(line) }
@@ -39,9 +44,16 @@ module TaskExtract
             end
           end
 
-          add_task task
+          task_manager.add_task task
         end
       end
+      task_manager
+    end
+
+    def self.task_extract_without_finished file_path
+      task_manager = self.new
+      task_manager.set_tasks (self.task_extract file_path).tasks.delete_if{|task| task.finished?}
+      task_manager
     end
 
     def self.file_striction_extracts file_paths
@@ -53,10 +65,9 @@ module TaskExtract
     end
 
     def self.file_striction_extract file_path
-      task_manager = self.new
-      task_manager.task_extract file_path
+      tasks = (self.task_extract file_path).tasks
       file_paths = []
-      task_manager.tasks.each do |task|
+      tasks.each do |task|
         unless task.finished?
           task.file_strictions.each do |file_path|
             file_paths << file_path

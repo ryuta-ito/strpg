@@ -18,6 +18,11 @@ class TestTaskExtract < Test::Unit::TestCase
     assert_equal expected_str, (task_extract './task/sample/test_task_4').task_massages
   end
 
+  def test_task_extract_without_finished
+    tasks = (task_extract_without_finished './task/sample/test_task_6').tasks
+    assert_equal ['task1', 'task3'], tasks.map{|task| task.task} 
+  end
+
   def test_task_extract_with_file_striction
     task = (task_extract './task/sample/test_task_with_file_striction').tasks.first
     assert_equal [task.task, task.reason, task.file_strictions.first, task.result], ['task', 'reason', 'path/file', 'result']
