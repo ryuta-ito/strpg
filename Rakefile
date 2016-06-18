@@ -1,6 +1,5 @@
 require 'rake/testtask'
-require './src/dirs.rb'
-Dir.glob("./src/**/*.rb"){|file| require_relative file}
+Dir.glob("./lib/**/*.rb"){|file| require_relative file}
 include TaskExtract
 include EditControl
 include View
@@ -23,8 +22,12 @@ namespace :task do
     task_view Dirs::TEST_TASK_DIRS
   end
 
-  task :src do
+  task :lib do
     task_view Dirs::SRC_TASK_DIRS
+  end
+
+  task :all do
+    task_view_all Dirs::ALL_TASK_DIRS
   end
 end
 
