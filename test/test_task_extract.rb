@@ -1,4 +1,4 @@
-require_relative '../lib/task_extract.rb'
+require 'strpg/task_extract'
 require 'test/unit'
 
 class TestTaskExtract < Test::Unit::TestCase
@@ -29,7 +29,7 @@ class TestTaskExtract < Test::Unit::TestCase
   end
 
   def test_task_extract_with_file_striction_not_finished
-    assert_equal ['./lib/task.rb', './lib/view.rb'], (file_striction_extract './task/sample/file_striction/test_task_file_striction_extract')
+    assert_equal ['./lib/strpg/task.rb', './lib/strpg/view.rb'], (file_striction_extract './task/sample/file_striction/test_task_file_striction_extract')
     assert_equal [], (file_striction_extract './task/sample/file_striction/test_task_file_striction_extract_1')
   end
 end

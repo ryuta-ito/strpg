@@ -1,6 +1,5 @@
-require_relative '../lib/edit_control.rb'
-require_relative '../lib/task_extract.rb'
-require_relative '../lib/dirs.rb'
+require 'strpg/edit_control'
+require 'strpg/task_extract'
 require 'test/unit'
 
 class TestEditControl < Test::Unit::TestCase

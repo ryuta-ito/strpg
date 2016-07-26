@@ -1,4 +1,4 @@
-require_relative '../lib/line.rb'
+require 'strpg/task_extract'
 require 'test/unit'
 
 class TestLine < Test::Unit::TestCase
@@ -18,4 +18,3 @@ class TestLine < Test::Unit::TestCase
     assert_equal [false, false, false, true], [l.task?, l.reason?, l.file_striction?, l.result?]
   end
 end
-

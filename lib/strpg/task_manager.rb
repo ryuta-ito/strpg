@@ -1,5 +1,5 @@
-require_relative './task.rb'
-require_relative './line.rb'
+require 'strpg/task'
+require 'strpg/line'
 
 module TaskExtract
   class TaskManager #Taskのfactory
@@ -20,7 +20,7 @@ module TaskExtract
     def self.task_extract file_path
       task_manager = self.new
       lines = []
-      result_lines = []
+      # result_lines = []
       File.foreach(file_path) { |line| lines << Line.new(line) }
 
       lines.each.with_index do |line, i|
