@@ -1,3 +1,5 @@
+require "bundler/gem_tasks"
+require 'strpg'
 require 'rake/testtask'
 
 task :default => [:test]
