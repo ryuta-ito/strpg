@@ -25,7 +25,23 @@ module EditControl
 
   def change_files_writable file_paths, mode
     file_paths.each do |file_path|
-      FileUtils.chmod(mode, file_path)
+      begin
+        FileUtils.chmod(mode, file_path)
+      rescue
+        create_file file_path
+      end
+    end
+  end
+
+  def create_file file_path
+    dir = (file_path.split '/').reverse.drop(1).reverse.join '/'
+    begin
+      FileUtils.chmod('u+w', dir)
+      FileUtils.touch file_path
+      FileUtils.chmod('u+w', dir)
+    rescue
+      puts "no such file #{file_path}"
+      exit
     end
   end
 end
