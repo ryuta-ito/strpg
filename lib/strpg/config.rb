@@ -19,6 +19,10 @@ module Config
       @yaml_hash["strict_files"]
     end
 
+    def developmenting_dirs
+      @yaml_hash[__method__.to_s]
+    end
+
     def all_strict_files
       files = (strict_dirs + strict_files).map do |file|
         Dir[file]
