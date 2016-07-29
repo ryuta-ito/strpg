@@ -1,0 +1,2 @@
+strict_dirs: ['./lib/*', './*']
+strict_files: ['./doc/initiative']
