@@ -1,0 +1,3 @@
+strict_dirs: ['./lib/**/*', './bin/*', './*']
+strict_files: []
+developmenting_dirs: ['./', './lib/strpg', './test', './task', './doc']
