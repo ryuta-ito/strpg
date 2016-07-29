@@ -35,13 +35,16 @@ module EditControl
 
   def create_file file_path
     dir = (file_path.split '/').reverse.drop(1).reverse.join '/'
+
     begin
       FileUtils.chmod('u+w', dir)
-      FileUtils.touch file_path
-      FileUtils.chmod('u+w', dir)
     rescue
-      puts "no such file #{file_path}"
-      exit
+      puts "no such dir #{dir}\n create it"
+      FileUtils.mkdir_p dir
     end
+
+    FileUtils.touch file_path
+    FileUtils.chmod('u-w', dir)
+    puts "create new file #{file_path}"
   end
 end

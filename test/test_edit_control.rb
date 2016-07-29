@@ -58,5 +58,24 @@ class TestEditControl < Test::Unit::TestCase
     assert_equal false, bool
     do_writable_all
   end
+
+  # test 'create_file' do
+  #   create_file './sample/asdf'
+  #   assert_equal true, (File.file?'./sample/asdf')
+  #   (FileUtils.rm './sample/asdf', {:force => true}) if File.file? './sample/asdf'
+  # end
+  
+  test 'create_file_and_dir' do
+    dir = './sample/asdf'
+    file_path = File.join './sample/asdf', 'asdf'
+    create_file file_path
+    assert_equal true, (File.file? file_path)
+
+    if File.file? file_path
+      FileUtils.chmod 'u+w', dir
+      FileUtils.rm file_path
+      FileUtils.rmdir dir
+    end
+  end
 end
 
