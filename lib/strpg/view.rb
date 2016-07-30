@@ -6,6 +6,7 @@ module View
     tasks.each do |task| 
       CE.fg task.color
       puts task.message
+      puts "writable files: #{task.file_strictions}"
       CE.fg :white
       puts '--'
     end
