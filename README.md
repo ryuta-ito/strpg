@@ -1,9 +1,10 @@
 # About
-strpg (strict programming) is the tool.
+strpg (strict programming) is the tool to support your programming.
 
-# Instration
-$ git clone <git-url>
+# Installation
+$ git clone 
 $ cd strpg
+$ ./bin/release
 $ gem install strpg-0.0.0.gem
 
 # Usage
