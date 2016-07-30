@@ -26,6 +26,7 @@ module EditControl
   def change_files_writable file_paths, mode
     file_paths.each do |file_path|
       begin
+        (puts "writable #{file_path}") if mode == 'u+w'
         FileUtils.chmod(mode, file_path)
       rescue
         create_file file_path
