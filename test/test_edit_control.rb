@@ -1,10 +1,11 @@
 require 'strpg/edit_control'
 require 'strpg/task_extract'
 require 'test/unit'
+require 'erb'
 
 class TestEditControl < Test::Unit::TestCase
-  include EditControl
-  include TaskExtract
+  include Strpg::EditControl
+  include Strpg::TaskExtract
 
   def teardown
     do_writable_all
@@ -17,7 +18,7 @@ class TestEditControl < Test::Unit::TestCase
     # p Dirs::WRITABLE_DIRS
     # p unfinished_task_file_striction_paths
     # exit
-    bool = (Dirs::WRITABLE_DIRS - unfinished_task_file_striction_paths).map do |dir_pattern|
+    bool = (Strpg::Dirs::WRITABLE_DIRS - unfinished_task_file_striction_paths).map do |dir_pattern|
       (Dir.glob dir_pattern).map do |file_path|
         File.writable? file_path
       end.reduce{|a, b| a or b}
@@ -40,7 +41,7 @@ class TestEditControl < Test::Unit::TestCase
 
   def test_writable_all
     do_writable_all
-    bool = Dirs::WRITABLE_DIRS.map do |dir_pattern|
+    bool = Strpg::Dirs::WRITABLE_DIRS.map do |dir_pattern|
       (Dir.glob dir_pattern).map do |file_path|
         File.writable? file_path
       end.reduce{|a, b| a and b}
@@ -50,13 +51,12 @@ class TestEditControl < Test::Unit::TestCase
 
   def test_unwritable_all
     do_unwritable_all
-    bool = Dirs::WRITABLE_DIRS.map do |dir_pattern|
+    bool = Strpg::Dirs::WRITABLE_DIRS.map do |dir_pattern|
       (Dir.glob dir_pattern).map do |file_path|
         File.writable? file_path
       end.reduce{|a, b| a or b}
     end.reduce{|a, b| a or b}
     assert_equal false, bool
-    do_writable_all
   end
 
   # test 'create_file' do
@@ -67,15 +67,62 @@ class TestEditControl < Test::Unit::TestCase
   
   test 'create_file_and_dir' do
     dir = './sample/asdf'
-    file_path = File.join './sample/asdf', 'asdf'
+    file = 'asdf'
+    file_path = File.join dir, file
     create_file file_path
     assert_equal true, (File.file? file_path)
+    remove_file file_path
+  end
 
-    if File.file? file_path
-      FileUtils.chmod 'u+w', dir
-      FileUtils.rm file_path
-      FileUtils.rmdir dir
+  test 'create file using template' do
+    file_path = './lib/strpg/asdf.rb'
+    create_file file_path
+
+    file1 = File.open './template/lib.erb' do |f|
+      cap_prj_name = 'strpg'.capitalize
+      cap_pure_name = 'asdf'.capitalize
+      ERB.new(f.read).result(binding)
     end
+
+    file2 = File.open(file_path) { |f| f.read }
+    remove_file file_path
+    assert_equal file1, file2
+
+    file_path = './test/test_asdf.rb'
+    create_file file_path
+    
+    file1 = File.open './template/test.erb' do |f|
+      cap_pure_test_name = 'asdf'.capitalize
+      ERB.new(f.read).result(binding)
+    end
+    
+    file2 = File.open(file_path) { |f| f.read }
+    remove_file file_path
+    assert_equal file1, file2
+    remove_file file_path
+  end
+
+  test 'get_file_name' do
+    file_path = './path/to/file_name'
+    assert_equal 'file_name', (get_file_name file_path)
+  end
+
+  test 'erase_file_identifier' do
+    file_name = 'file.rb'
+    assert_equal 'file', (erase_file_identifier file_name)
+  end
+  
+  test 'get_pure_name' do
+    file_path = './path/to/file.rb'
+    assert_equal 'file', (get_pure_name file_path)
+  end
+
+  test 'get_pure_test_name' do
+    file_path = './path/to/test_file.rb'
+    assert_equal 'file', (get_pure_test_name file_path) 
+    
+    file_path = './path/to/test.rb'
+    assert_equal '', (get_pure_test_name file_path) 
   end
 end
 

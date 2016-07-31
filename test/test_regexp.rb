@@ -2,7 +2,7 @@ require 'strpg/task_extract'
 require 'test/unit'
 
 class TestLine < Test::Unit::TestCase
-  include TaskExtract
+  include Strpg::TaskExtract
 
   def test_regexp
     l = Line.new('- task')
