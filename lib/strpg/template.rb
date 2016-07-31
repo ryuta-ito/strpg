@@ -1,4 +1,5 @@
 require 'strpg/utils'
+require 'strpg/config'
 
 module Strpg
   class Template
@@ -11,7 +12,7 @@ module Strpg
 
     def lib_template
       File.open './template/lib.erb' do |f|
-        cap_prj_name = 'Strpg' # its hard cording
+        cap_prj_name = (Strpg::Config::YamlFile.new.project_name).capitalize
         cap_pure_name = @pure_name.capitalize
         ERB.new(f.read).result(binding)
       end

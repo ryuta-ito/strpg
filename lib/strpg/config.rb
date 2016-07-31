@@ -12,15 +12,20 @@ module Strpg
         end
       end
 
+      # should meta programming
       def strict_dirs
-        @yaml_hash["strict_dirs"]
+        @yaml_hash[__method__.to_s]
       end
 
       def strict_files
-        @yaml_hash["strict_files"]
+        @yaml_hash[__method__.to_s]
       end
 
       def developmenting_dirs
+        @yaml_hash[__method__.to_s]
+      end
+
+      def project_name
         @yaml_hash[__method__.to_s]
       end
 
