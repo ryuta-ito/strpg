@@ -1,4 +1,3 @@
-require 'strpg/utils'
 require 'strpg/config'
 require 'strpg/dirs'
 require 'strpg/edit_control'
@@ -11,6 +10,6 @@ require 'strpg/view'
 require 'thor'
 require 'fileutils'
 
-include TaskExtract
-include EditControl
-include View
+include Strpg::TaskExtract
+include Strpg::EditControl
+include Strpg::View

@@ -2,7 +2,7 @@ require 'strpg/task_extract'
 require 'test/unit'
 
 class TestTaskExtract < Test::Unit::TestCase
-  include TaskExtract
+  include Strpg::TaskExtract
 
   def test_task_extract
     expected_str = "( task1 ) is not finished\nthe reason is nothing\n( task2 ) -> ( something text )\nthe reason is nothing\n"

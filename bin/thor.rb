@@ -1,10 +1,10 @@
 require 'thor'
 
-class Strpg < Thor
+class StrpgCommand < Thor
 
   desc 'task [option]', 'show task'
   def task
-    task_view Dirs::ALL_TASK_DIRS
+    task_view Strpg::Dirs::ALL_TASK_DIRS
   end
 
   desc 'strict [option]', 'strict files'
@@ -32,7 +32,7 @@ class Strpg < Thor
 
   desc 'developmenting', 'development is starting'
   def developmenting
-    dirs = Dirs::DEVELOPMENTING_DIRS
+    dirs = Strpg::Dirs::DEVELOPMENTING_DIRS
     option =  dirs.reduce('') do |_option, path|
       _path = File.join(Dir.pwd, path)
       _option + " --tab-with-profile=Default --working-directory=\"#{_path}\""
@@ -41,4 +41,4 @@ class Strpg < Thor
   end
 end
 
-Strpg.start(ARGV)
+StrpgCommand.start(ARGV)
